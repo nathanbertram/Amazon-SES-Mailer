@@ -12,12 +12,21 @@ Implements Amazon SES API.
 - Currently it only supports raw message sending.
 - Rails support is not very well tested.
 
-# Rails Example
+# Rails 3.0.x Example
 
 Put in `config/environments/env.rb`:
 
 	mailer = AmazonSes::Mailer.new(secret_key: __, access_key: __)
     config.action_mailer.delivery_method = mailer
+
+# Rails 2.3.X Example
+
+Put in `config/environments/env.rb`:
+
+	config.after_initialize do
+    ActionMailer::Base.delivery_method = :amazon_ses
+    ActionMailer::Base.custom_amazon_ses_mailer = AmazonSes::Mailer.new(:secret_key => S3_CONFIG[:secret_access_key], :access_key => S3_CONFIG[:access_key_id])
+	end
 
 # Examples
 
